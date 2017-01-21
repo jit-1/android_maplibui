@@ -31,6 +31,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.nextgis.maplib.api.IGISApplication;
@@ -42,6 +43,7 @@ import com.nextgis.maplib.map.VectorLayer;
 import com.nextgis.maplib.util.Constants;
 import com.nextgis.maplib.util.FileUtil;
 import com.nextgis.maplib.util.MapUtil;
+import com.nextgis.maplib.util.SettingsConstants;
 import com.nextgis.maplibui.R;
 import com.nextgis.maplibui.activity.NGActivity;
 
@@ -54,6 +56,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -259,6 +263,28 @@ public final class LayerUtil {
                     shareIntent, mLayer.getContext().getString(R.string.menu_share));
             shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mLayer.getContext().startActivity(shareIntent);
+
+            File outputFile = new File(SettingsConstants.WORKING_DIR + "/out.zip");
+            InputStream is = null;
+            OutputStream os = null;
+            try {
+                is = new FileInputStream(s);
+                os = new FileOutputStream(outputFile);
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = is.read(buffer)) > 0) {
+                    os.write(buffer, 0, length);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    is.close();
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
