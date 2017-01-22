@@ -31,7 +31,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.nextgis.maplib.api.IGISApplication;
@@ -264,6 +263,7 @@ public final class LayerUtil {
             shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mLayer.getContext().startActivity(shareIntent);
 
+            // Save the zip in sync's working directory
             File outputFile = new File(SettingsConstants.WORKING_DIR + "/out.zip");
             InputStream is = null;
             OutputStream os = null;
