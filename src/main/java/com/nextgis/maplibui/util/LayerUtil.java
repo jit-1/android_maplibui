@@ -51,11 +51,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -264,7 +266,18 @@ public final class LayerUtil {
             mLayer.getContext().startActivity(shareIntent);
 
             // Save the zip in sync's working directory
-            File outputFile = new File(SettingsConstants.WORKING_DIR + "/out.zip");
+            String phoneNumber = null;
+            File sourceFile = new File(SettingsConstants.DMS_PATH + "Source.txt");
+            try {
+                FileInputStream fis = new FileInputStream(sourceFile);
+                BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+
+                phoneNumber = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            File outputFile = new File(SettingsConstants.WORKING_DIR + "IMG_50_Food_9836062742_defaultMCS_23.25_87.36_20170123190508_0.zip");
             InputStream is = null;
             OutputStream os = null;
             try {
