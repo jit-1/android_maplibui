@@ -257,17 +257,6 @@ public final class LayerUtil {
                 return;
             }
 
-            Intent shareIntent = new Intent();
-            shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.setType("application/json,application/vnd.geo+json");
-            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(s));
-//            shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, urisArray); // multiple data
-
-            shareIntent = Intent.createChooser(
-                    shareIntent, mLayer.getContext().getString(R.string.menu_share));
-            shareIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mLayer.getContext().startActivity(shareIntent);
-
             // Save the zip in sync's working directory
             String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
             String source = null;
