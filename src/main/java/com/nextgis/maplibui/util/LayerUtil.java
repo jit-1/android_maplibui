@@ -262,7 +262,7 @@ public final class LayerUtil {
             String source = null;
             SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext());
             try {
-                source =  sharedPrefs.getString("phone_no", "NA");
+                source =  sharedPrefs.getString(SettingsConstants.PHONE_NO, "NA");
             } catch (Exception e) {
                 e.printStackTrace();
                 source =  "NA";
