@@ -266,18 +266,20 @@ public final class LayerUtil {
             mLayer.getContext().startActivity(shareIntent);
 
             // Save the zip in sync's working directory
-            String phoneNumber = null;
+            String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            String source = null;
             File sourceFile = new File(SettingsConstants.DMS_PATH + "Source.txt");
             try {
                 FileInputStream fis = new FileInputStream(sourceFile);
                 BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 
-                phoneNumber = br.readLine();
+                source = br.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            File outputFile = new File(SettingsConstants.WORKING_DIR + "IMG_50_Food_9836062742_defaultMCS_23.25_87.36_20170123190508_0.zip");
+            File outputFile = new File(SettingsConstants.WORKING_DIR + "IMG_50_Food_" + source +
+                    "_defaultMCS_23.25_87.36_" + timeStamp + "_0.zip");
             InputStream is = null;
             OutputStream os = null;
             try {
