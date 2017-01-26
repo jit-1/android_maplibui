@@ -26,11 +26,14 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.nextgis.maplib.api.IGISApplication;
@@ -268,14 +271,12 @@ public final class LayerUtil {
             // Save the zip in sync's working directory
             String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
             String source = null;
-            File sourceFile = new File(SettingsConstants.DMS_PATH + "Source.txt");
+            SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext());
             try {
-                FileInputStream fis = new FileInputStream(sourceFile);
-                BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-
-                source = br.readLine();
-            } catch (IOException e) {
+                source =  sharedPrefs.getString("phone_no", "NA");
+            } catch (Exception e) {
                 e.printStackTrace();
+                source =  "NA";
             }
 
             File outputFile = new File(SettingsConstants.WORKING_DIR + "IMG_50_Food_" + source +
