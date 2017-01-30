@@ -268,7 +268,7 @@ public final class LayerUtil {
                 source =  "NA";
             }
 
-            File outputFile = new File(SettingsConstants.WORKING_DIR + "IMG_50_Food_" + source +
+            File outputFile = new File(SettingsConstants.WORKING_DIR + "GIS_50_Gis_" + source +
                     "_defaultMCS_23.25_87.36_" + timeStamp + "_0.zip");
             InputStream is = null;
             OutputStream os = null;
