@@ -48,6 +48,7 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -341,10 +342,34 @@ public class ModifyAttributesActivity
                 case GeoConstants.FTString:
                 case GeoConstants.FTInteger:
                 case GeoConstants.FTReal:
-                    TextEdit textEdit = (TextEdit) getLayoutInflater().inflate(R.layout.template_textedit, layout, false);
+                    final TextEdit textEdit = (TextEdit) getLayoutInflater().inflate(R.layout.template_textedit, layout, false);
                     if (mIsViewOnly) {
                         textEdit.setEnabled(false);
                     }
+
+                    if(field.getAlias().equals("CONTACT NUMBER")) {
+                        String contactNumber;
+                        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+                        try {
+                            contactNumber =  sharedPrefs.getString(SettingsConstants.PHONE_NO, "NA");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            contactNumber =  "NA";
+                        }
+
+                        // Set contact number in the field and make it non editable
+                        if(!contactNumber.equals("NA")) {
+                            final String finalContactNumber = contactNumber;
+                            textEdit.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textEdit.setText(finalContactNumber, TextView.BufferType.NORMAL);
+                                    textEdit.setEnabled(false);
+                                }
+                            });
+                        }
+                    }
+
                     control = textEdit;
                     break;
                 case GeoConstants.FTDate:
